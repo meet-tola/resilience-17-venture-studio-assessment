@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { appLogger } = require('@app-core/logger');
+
 /**
  * Mongoose Connection Config
  * @typedef {Object} MongooseConnectionConfig
@@ -29,8 +31,16 @@ async function createConnection(connectionConfig) {
       let connection;
       if (isNotDefault) {
         connection = await mongoose.createConnection(uri, connectionOptions);
+        connection.on('connected', () => {
+          appLogger.info('DB Connected successfully');
+        });
       } else {
-        ({ connection } = await mongoose.connect(uri, connectionOptions));
+        const mongooseInstance = await mongoose.connect(uri, connectionOptions);
+        connection = mongooseInstance.connection;
+
+        connection.on('connected', () => {
+          appLogger.info('DB Connected successfully');
+        });
       }
       connectionResult.connection = connection;
     } catch (e) {
