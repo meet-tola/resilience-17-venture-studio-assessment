@@ -8,11 +8,11 @@ module.exports = {
 
   // Conditional Access Rule Messages
   ACCESS_CODE_REQUIRED: 'access_code is required when access_type is private',
-  INVALID_ACCESS_CODE_FORMAT: 'access_code must be exactly 6 alphanumeric characters',
-  ACCESS_CODE_RESTRICTION: 'access_code can only be set on private cards',
+  INVALID_ACCESS_CODE_FORMAT: 'Invalid access code',
+  ACCESS_CODE_RESTRICTION: 'This card is private. An access code is required',
   INVALID_ACCESS_TYPE: 'access_type must be public or private',
 
-  // Deep Structural Array/Object Messages
+  // Structural Array/Object Messages
   LINK_TITLE_ERROR: 'Link title must be between 1 and 100 characters',
   LINK_URL_ERROR: 'Link URL must be under 200 characters and start with http:// or https://',
   INVALID_CURRENCY: 'Invalid currency code specified',
