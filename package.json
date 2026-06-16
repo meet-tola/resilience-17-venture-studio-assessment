@@ -6,7 +6,7 @@
   "type": "commonjs",
   "repository": {
     "type": "git",
-    "url": "profold-be-api-1"
+    "url": "resilience-17-venture-studio-assessment"
   },
   "scripts": {
     "test": "set USE_MOCK_MODEL=1 && mocha --recursive --require dotenv/config",
@@ -15,7 +15,7 @@
     "sync-envs": "node sync-env-files"
   },
   "keywords": [],
-  "author": "Resilience17",
+  "author": "meet-tola",
   "license": "ISC",
   "dependencies": {
     "@app-core/errors": "file:core/errors",
