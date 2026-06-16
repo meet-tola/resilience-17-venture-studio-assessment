@@ -5,15 +5,12 @@ if (!process.env.__ALREADY_BOOTSTRAPPED_ENVS) require('dotenv').config();
 const fs = require('fs');
 const { createServer } = require('@app-core/server');
 const { createConnection } = require('@app-core/mongoose');
-const { createQueue } = require('@app-core/queue');
 
 const canLogEndpointInformation = process.env.CAN_LOG_ENDPOINT_INFORMATION;
 
 createConnection({
   uri: process.env.MONGODB_URI,
 });
-
-createQueue();
 
 const server = createServer({
   port: process.env.PORT,
@@ -23,35 +20,42 @@ const server = createServer({
 
 const ENDPOINT_CONFIGS = [
   {
-    path: './endpoints/onboarding/',
+    path: './endpoints/creator-cards/',
   },
 ];
 
 function logEndpointMetaData(endpointConfigs) {
   const endpointData = [];
   const storageDirName = './endpoint-data';
-  const EXEMPTED_ENDPOINTS_REGEX = /onboarding/;
 
   endpointConfigs.forEach((endpointConfig) => {
     const { path: basePath, options } = endpointConfig;
 
+    if (!fs.existsSync(basePath)) return;
+
     const dirs = fs.readdirSync(basePath);
 
     dirs.forEach((file) => {
+      // Skip folders or non-javascript configuration files if present
+      if (!file.endsWith('.js')) return;
+
       const handler = require(`${basePath}${file}`);
 
-      if (!EXEMPTED_ENDPOINTS_REGEX.test(basePath) && handler.middlewares?.length) {
-        const entry = { method: handler.method, endpoint: handler.path };
-        entry.name = file.replaceAll('-', ' ').replace('.js', '');
-        entry.display_name = `can ${entry.name}`;
+      // Remove the middleware requirement and onboarding filter since all paths are public
+      const entry = {
+        method: handler.method ? handler.method.toUpperCase() : 'GET',
+        endpoint: handler.path,
+      };
 
-        if (options?.pathPrefix) {
-          entry.endpoint = `${options.pathPrefix}${entry.endpoint}`;
-          entry.name = `${entry.name} (${options.pathPrefix.replace('/', '')})`;
-        }
+      entry.name = file.replaceAll('-', ' ').replace('.js', '');
+      entry.display_name = `can ${entry.name}`;
 
-        endpointData.push(entry);
+      if (options?.pathPrefix) {
+        entry.endpoint = `${options.pathPrefix}${entry.endpoint}`;
+        entry.name = `${entry.name} (${options.pathPrefix.replace('/', '')})`;
       }
+
+      endpointData.push(entry);
     });
   });
 
