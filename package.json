@@ -1,7 +1,7 @@
 {
-  "name": "profold-be-api",
+  "name": "resilience-17-venture-studio-assessment",
   "version": "1.0.0",
-  "description": "Project Scaffold for R17 Projects",
+  "description": "Creator Card API for R17 Assessment",
   "main": "app.js",
   "type": "commonjs",
   "repository": {
