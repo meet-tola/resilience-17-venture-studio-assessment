@@ -1,5 +1,5 @@
-const userAuth = require('./user-auth');
+const requestTimer = require('./request-timer');
 
 module.exports = {
-  userAuth,
+  requestTimer,
 };
