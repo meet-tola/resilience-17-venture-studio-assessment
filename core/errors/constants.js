@@ -3,6 +3,16 @@
  * @enum
  */
 const ERROR_CODE = {
+  // Assessment Business Error Codes
+  SL02: 'SL02', // Slug must be unique
+  AC01: 'AC01', // access_code is required when access_type is private
+  AC05: 'AC05', // access_code must not be set on public cards
+  NF01: 'NF01', // Card with the given slug does not exist
+  NF02: 'NF02', // Card exists but is in draft status
+  AC03: 'AC03', // Access code required to view private card
+  AC04: 'AC04', // Invalid access code
+
+  // Baseline Template Fallbacks
   AUTHERR: 'AUTHORIZATION_ERROR',
   NOAUTHERR: 'MISSING_AUTHORIZATION',
   INVLDAUTHTOKEN: 'INVALID_AUTH_TOKEN',
@@ -22,6 +32,16 @@ const ERROR_CODE = {
 };
 
 const ERROR_STATUS_CODE_MAPPING = {
+  // Custom Assessment Code
+  SL02: 400,
+  AC01: 400,
+  AC05: 400,
+  NF01: 404,
+  NF02: 404,
+  AC03: 403,
+  AC04: 403,
+
+  // Baseline Template Mappings
   AUTHORIZATION_ERROR: 401,
   MISSING_AUTHORIZATION: 401,
   INVALID_AUTH_TOKEN: 401,
