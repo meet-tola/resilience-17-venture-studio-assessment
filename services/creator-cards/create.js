@@ -8,13 +8,13 @@ const { ulid } = require('ulid');
 // VSL Spec for primary field level structure validation
 const creatorCardSpec = `root {
   title string
-  description any
-  slug any
+  description any?
+  slug any?
   creator_reference string
-  links any
-  service_rates any
-  status string
-  access_type any
+  links any?
+  service_rates any?
+  status "draft" | "published"
+  access_type any?
   access_code any?
 }`;
 
